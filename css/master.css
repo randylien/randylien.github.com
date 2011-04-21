@@ -139,6 +139,9 @@ body {
 		box-shadow: 2px 2px 5px #000;
 		-moz-box-shadow: 2px 2px 5px #000;
 		-webkit-box-shadow: 2px 2px 5px #888;
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		border-radius: 5px;
 		display: block;
 		padding: 1em 0;
 		text-align: center;
@@ -191,6 +194,7 @@ body {
 		padding: .5em;
 		-webkit-border-radius: 5px;
 		-moz-border-radius: 5px;
+        border-radius: 5px;
 		word-wrap: break-word;
 	}
 
