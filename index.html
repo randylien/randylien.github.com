@@ -46,7 +46,6 @@
         all right reserved by randy.lien
     </div>
 <script type="text/javascript" charset="utf-8">
-//<![CDATA[
     google.load("jquery", "1.3.2");
     google.load("gdata", "2.x", {packages: ["blogger", "contacts"]});
     google.setOnLoadCallback(function(){
@@ -62,21 +61,22 @@
         jQuery.getJSON('http://randylien.tumblr.com/api/read/json?callback=?',
             function(data){
                 $.each(data.posts, function(i, item){
-                    switch(item['type']){
+                    var content;
+                    switch(item.type){
                         case "regular":
-                            var content = "<a href='"+item.url+"' class='regular'>"+ item['regular-title'] +"</a>";
+                            content = "<a href='"+item.url+"' class='regular'>"+ item['regular-title'] +"</a>";
                             break;
                         case "photo":
-                            var content = "<a href='"+item.url+"' class='photo'><img src='"+ item['photo-url-250'] +"' alt=''/></a>";
+                            content = "<a href='"+item.url+"' class='photo'><img src='"+ item['photo-url-250'] +"' alt=''/></a>";
                             break;
                         case "link":
-                            var content = "<a href='"+item.url+"' class='link'>"+ item['link-text'] +"</a>";
+                            content = "<a href='"+item.url+"' class='link'>"+ item['link-text'] +"</a>";
                             break;
                         case "video":
-                            var content = "<a href='"+item.url+"' class='video'>"+ item['url-with-slug'] +"</a>";
+                            content = "<a href='"+item.url+"' class='video'>"+ item['url-with-slug'] +"</a>";
                             break;
                         default:
-                            var content = "<a href='"+item.url+"' class='default'>"+ item['url-with-slug'] +"</a>";
+                            content = "<a href='"+item.url+"' class='default'>"+ item['url-with-slug'] +"</a>";
                             break;
                     }
                     $("<li />").html(content).appendTo('#tumblr ul');
@@ -102,7 +102,6 @@
 
 
     });
-//]]>
 </script>
 </body>
 </html>
