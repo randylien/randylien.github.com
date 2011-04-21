@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/reset/reset-min.css" />
+    <link rel="stylesheet" href="css/master.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+    <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+	<title>Portfolio</title>
+</head>
+
+<body id="home">
+    <div id="overlay" />
+    <div id="header">
+        <h1 id="blog-title">Blog title</h1>
+    </div>
+    <div id="content">
+        <!-- equal height begin -->
+        <div id="tumblr-background">
+            <div id="blogger-background">
+                <div id="twitter-background">
+                    <div id="work-background">
+                        <div id="tumblr">
+                            <h2 class="title"><em>micro.blog</em></h2>
+                            <ul></ul>
+                        </div>
+                        <div id="blogger">
+                            <h2 class="title">blog</h2>
+                            <ul></ul>
+                        </div>
+                        <div id="twitter">
+                            <h2 class="title">twitter</h2>
+                            <ul></ul>
+                        </div>
+                        <div id="work">
+                            <h2 class="title">photo</h2>
+                            <ul></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- equal height end -->
+    </div>
+    <div id="footer">
+        <address></address>
+        all right reserved by randy.lien
+    </div>
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+    google.load("jquery", "1.3.2");
+    google.load("gdata", "2.x", {packages: ["blogger", "contacts"]});
+    google.setOnLoadCallback(function(){
+
+        jQuery.getJSON('http://twitter.com/statuses/user_timeline/randylien.json?count=10&callback=?',
+            function(data){
+                $.each(data, function(i, item){
+                    $("<li />").text(item.text).appendTo('#twitter ul');
+                    if ( i == 10 ) return false;
+                });
+        });
+
+        jQuery.getJSON('http://randylien.tumblr.com/api/read/json?callback=?',
+            function(data){
+                $.each(data.posts, function(i, item){
+                    switch(item['type']){
+                        case "regular":
+                            var content = "<a href='"+item.url+"' class='regular'>"+ item['regular-title'] +"</a>";
+                            break;
+                        case "photo":
+                            var content = "<a href='"+item.url+"' class='photo'><img src='"+ item['photo-url-250'] +"' alt=''/></a>";
+                            break;
+                        case "link":
+                            var content = "<a href='"+item.url+"' class='link'>"+ item['link-text'] +"</a>";
+                            break;
+                        case "video":
+                            var content = "<a href='"+item.url+"' class='video'>"+ item['url-with-slug'] +"</a>";
+                            break;
+                        default:
+                            var content = "<a href='"+item.url+"' class='default'>"+ item['url-with-slug'] +"</a>";
+                            break;
+                    }
+                    $("<li />").html(content).appendTo('#tumblr ul');
+                    if ( i == 10 ) return false;
+                });
+        });
+
+        jQuery.getJSON('http://api.flickr.com/services/feeds/photos_public.gne?tags=cat&tagmode=any&format=json&jsoncallback=?', 
+            function(data){
+                $.each(data.items, function(i, item){
+                    $("<li />").append($("<a />").attr({'src':item.media.m,'target':'_blank'}).append($("<img class='thumbnail' />").attr('src',item.media.m).css('width','125px'))).appendTo('#work ul');
+                    if( i == 5 ) return false;
+                });
+        });
+
+        jQuery.getJSON("http://randylien.blogspot.com/feeds/posts/default?max-results=5&alt=json-in-script&callback=?",
+            function (root) {
+                var feed = root.feed;
+                $.each(feed.entry, function(i, item){
+                    $('<li />').append('<h3>'+item.title.$t+'</h3>'+'<p class="summary">'+item.content.$t+'</p>').appendTo('#blogger ul');
+                });
+        });
+
+
+    });
+//]]>
+</script>
+</body>
+</html>
